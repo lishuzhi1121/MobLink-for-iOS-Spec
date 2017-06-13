@@ -36,9 +36,6 @@
     self.window.rootViewController = [[MLDMainViewController alloc] init];
     [self.window makeKeyAndVisible];
     
-    // 初始化MobLink 线上:1b8898cb51ccb
-    [MobLink registerApp:@"1b8898cb51ccb"];
-    
     // 设置MobLink代理
     [MobLink setDelegate:self];
     
@@ -79,54 +76,53 @@
  */
 - (void)initShareSDK
 {
-    [ShareSDK registerApp:@"1b8f1341a7d00"
-          activePlatforms:@[@(SSDKPlatformTypeSinaWeibo),
-                            @(SSDKPlatformSubTypeWechatSession),
-                            @(SSDKPlatformSubTypeWechatTimeline),
-                            @(SSDKPlatformTypeQQ)]
-                 onImport:^(SSDKPlatformType platformType) {
-                     
-                     switch (platformType)
-                     {
-                         case SSDKPlatformTypeWechat:
-                             [ShareSDKConnector connectWeChat:[WXApi class] delegate:self];
-                             break;
-                         case SSDKPlatformTypeQQ:
-                             [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
-                             break;
-                         case SSDKPlatformTypeSinaWeibo:
-                             [ShareSDKConnector connectWeibo:[WeiboSDK class]];
-                             break;
-                             
-                         default:
-                             break;
-                     }
-                     
-                 } onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
-                     
-                     switch (platformType)
-                     {
-                         case SSDKPlatformTypeWechat:
-                             [appInfo SSDKSetupWeChatByAppId:@"wx01634d672597c03c"
-                                                   appSecret:@"64020361b8ec4c99936c0e3999a9f249"];
-                             break;
-                         case SSDKPlatformTypeQQ:
-                             [appInfo SSDKSetupQQByAppId:@"1105479028"
-                                                  appKey:@"HxHozohsRAkSGREY"
-                                                authType:SSDKAuthTypeSSO];
-                             break;
-                         case SSDKPlatformTypeSinaWeibo:
-                             [appInfo SSDKSetupSinaWeiboByAppKey:@"474962333"
-                                                       appSecret:@"26522c6ed236057fd4ff5005449f98e9"
-                                                     redirectUri:@"http://www.sharesdk.cn"
-                                                        authType:SSDKAuthTypeBoth];
-                             break;
-                             
-                         default:
-                             break;
-                     }
-                     
-                 }];
+    [ShareSDK registerActivePlatforms:@[@(SSDKPlatformTypeSinaWeibo),
+                                        @(SSDKPlatformSubTypeWechatSession),
+                                        @(SSDKPlatformSubTypeWechatTimeline),
+                                        @(SSDKPlatformTypeQQ)]
+                             onImport:^(SSDKPlatformType platformType) {
+                                 
+                                 switch (platformType)
+                                 {
+                                     case SSDKPlatformTypeWechat:
+                                         [ShareSDKConnector connectWeChat:[WXApi class] delegate:self];
+                                         break;
+                                     case SSDKPlatformTypeQQ:
+                                         [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+                                         break;
+                                     case SSDKPlatformTypeSinaWeibo:
+                                         [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+                                         break;
+                                         
+                                     default:
+                                         break;
+                                 }
+                                 
+                             } onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+                                 
+                                 switch (platformType)
+                                 {
+                                     case SSDKPlatformTypeWechat:
+                                         [appInfo SSDKSetupWeChatByAppId:@"wx01634d672597c03c"
+                                                               appSecret:@"64020361b8ec4c99936c0e3999a9f249"];
+                                         break;
+                                     case SSDKPlatformTypeQQ:
+                                         [appInfo SSDKSetupQQByAppId:@"1105479028"
+                                                              appKey:@"HxHozohsRAkSGREY"
+                                                            authType:SSDKAuthTypeSSO];
+                                         break;
+                                     case SSDKPlatformTypeSinaWeibo:
+                                         [appInfo SSDKSetupSinaWeiboByAppKey:@"474962333"
+                                                                   appSecret:@"26522c6ed236057fd4ff5005449f98e9"
+                                                                 redirectUri:@"http://www.sharesdk.cn"
+                                                                    authType:SSDKAuthTypeBoth];
+                                         break;
+                                         
+                                     default:
+                                         break;
+                                 }
+                                 
+                             }];
 }
 
 
